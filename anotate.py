@@ -1,12 +1,19 @@
 import cv2
 import numpy as np
 import os
-
+import random
 image_list = os.listdir('data')
 total_files = len(image_list)
 
 move = False
 # black_image = np.zeros((512,512), dtype = int )
+
+def hist_corr(img):
+    out = img
+    for i in range(3):
+        out[:,:,i] = cv2.equalizeHist(img[:,:,i])
+
+    return out
 
 def add_point(event, x, y, flags, param):
 
@@ -36,10 +43,12 @@ for image in image_list:
     cv2.imshow('view',img)
     cv2.setMouseCallback("view", add_point)
     cv2.waitKey(0)
-
+    
     # print(np.sum(black_image))
     cv2.imshow("label",black_image)
     name =image.split('.')[0]
+    
+    name = name + str(random.randint(0,1000000000000)) + "blah" + str(random.randint(0,1000000))
     name ="data_output/" + name + "_mask.png"
 
     cv2.waitKey(0)
