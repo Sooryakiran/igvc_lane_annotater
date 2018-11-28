@@ -39,6 +39,7 @@ for image in image_list:
     file_path = 'data/' + image
     img = cv2.imread(file_path)
     img = cv2.resize(img,(512,512))
+    orig = hist_corr(img)
     cv2.namedWindow('view')
     cv2.imshow('view',img)
     cv2.setMouseCallback("view", add_point)
@@ -49,10 +50,12 @@ for image in image_list:
     name =image.split('.')[0]
     
     name = name + str(random.randint(0,1000000000000)) + "blah" + str(random.randint(0,1000000))
-    name ="data_output/" + name + "_mask.png"
-
+    name_ ="data_output/" + name + "_mask.png"
+    name1="data_output/" + name + ".png"
+    print(name)
+    print(name1)
     cv2.waitKey(0)
-    cv2.imwrite(name,black_image)
-    cv2.imwrite("data_output"+name + ".jpg",cv2.resize(img,(512,512)) )
+    cv2.imwrite(name_, black_image)
+    cv2.imwrite(name1, orig,(512,512))
 
     cv2.destroyAllWindows()
